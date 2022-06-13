@@ -1,8 +1,9 @@
 import { defineComponent, PropType } from 'vue'
+import IDropDown from './IDropdown'
 
 export interface UserProps {
   isLogin: boolean
-  name?: string
+  name: string
   id?: number
 }
 
@@ -38,9 +39,7 @@ export default defineComponent({
           ) : (
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
-                <a href="#" class="btn btn-outline-light my-2">
-                  你好 {props.user.name}
-                </a>
+                <IDropDown title={props.user.name}></IDropDown>
               </li>
             </ul>
           )}
