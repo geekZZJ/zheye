@@ -8,7 +8,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, { slots }) {
     const isOpen = ref(false)
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
@@ -26,12 +26,7 @@ export default defineComponent({
           {/* eslint-disable-next-line */}
           {isOpen.value ? (
             <ul class="dropdown-menu" style="display:block">
-              <li class="dropdown-item">
-                <a href="#">新建文章</a>
-              </li>
-              <li class="dropdown-item">
-                <a href="#">编辑资料</a>
-              </li>
+              {slots.default?.()}
             </ul>
           ) : null}
         </div>
