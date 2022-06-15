@@ -1,4 +1,5 @@
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
+import useClickOutside from '@/hooks/useClickOutside'
 
 export default defineComponent({
   name: 'IDropdown',
@@ -14,21 +15,11 @@ export default defineComponent({
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
     }
-    const handler = (e: MouseEvent) => {
-      if (dropdownRef.value) {
-        if (
-          !dropdownRef.value.contains(e.target as HTMLElement) &&
-          isOpen.value
-        ) {
-          isOpen.value = false
-        }
+    const isClickOutside = useClickOutside(dropdownRef)
+    watch(isClickOutside, () => {
+      if (isOpen.value && isClickOutside.value) {
+        isOpen.value = false
       }
-    }
-    onMounted(() => {
-      document.addEventListener('click', handler)
-    })
-    onUnmounted(() => {
-      document.removeEventListener('click', handler)
     })
     return () => {
       return (
