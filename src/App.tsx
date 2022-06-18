@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList'
 import GlobalHeader, { UserProps } from './components/GlobalHeader'
@@ -35,14 +35,61 @@ const currentUser: UserProps = {
   name: '者也'
 }
 
+const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+
 export default defineComponent({
   name: 'App',
   setup() {
+    const emailRef = reactive({
+      val: '',
+      error: false,
+      message: ''
+    })
+    const validateEmail = () => {
+      if (emailRef.val.trim() === '') {
+        emailRef.error = true
+        emailRef.message = '请输入邮箱'
+      } else if (!emailReg.test(emailRef.val)) {
+        emailRef.error = true
+        emailRef.message = '邮箱格式不正确'
+      } else {
+        emailRef.error = false
+        emailRef.message = ''
+      }
+    }
     return () => {
       return (
         <div class="container">
           <GlobalHeader user={currentUser} />
-          <ColumnList list={testData} />
+          {/* <ColumnList list={testData} /> */}
+          <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">
+                邮箱地址
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                v-model={emailRef.val}
+                onBlur={validateEmail}
+              />
+              {/* eslint-disable-next-line */}
+              {emailRef.error ? (
+                <div class="form-text">{emailRef.message}</div>
+              ) : null}
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">
+                密码
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+              />
+            </div>
+          </form>
         </div>
       )
     }
