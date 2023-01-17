@@ -12,14 +12,22 @@ const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 export default defineComponent({
   name: 'ValidateInput',
   props: {
-    rules: Array as PropType<RulesProp>
+    rules: Array as PropType<RulesProp>,
+    modelValue: String
   },
-  setup(props) {
+  setup(props, { emit }) {
     const inputRef = reactive({
-      val: '',
+      val: props.modelValue || '',
       error: false,
       message: ''
     })
+
+    const updateValue = (e: Event) => {
+      const targetValue = (e.target as HTMLInputElement).value
+      inputRef.val = targetValue
+      emit('update:modelValue', targetValue)
+    }
+
     const validateInput = () => {
       if (props.rules) {
         const allPassed = props.rules.every((rule) => {
@@ -48,8 +56,9 @@ export default defineComponent({
           <input
             type="text"
             class={`form-control ${inputRef.error ? 'is-invalid' : ''}`}
-            v-model={inputRef.val}
+            value={inputRef.val}
             onBlur={validateInput}
+            onInput={updateValue}
           />
           {inputRef.error && (
             <span class="invalid-feedback ">{inputRef.message}</span>
