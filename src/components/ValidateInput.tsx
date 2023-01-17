@@ -13,8 +13,11 @@ export default defineComponent({
   name: 'ValidateInput',
   props: {
     rules: Array as PropType<RulesProp>,
-    modelValue: String
+    modelValue: String,
+    type: String,
+    placeholder: String
   },
+  inheritAttrs: false,
   setup(props, { emit }) {
     const inputRef = reactive({
       val: props.modelValue || '',
@@ -54,11 +57,12 @@ export default defineComponent({
       return (
         <div class="validate-input-container pb-3">
           <input
-            type="text"
             class={`form-control ${inputRef.error ? 'is-invalid' : ''}`}
             value={inputRef.val}
             onBlur={validateInput}
             onInput={updateValue}
+            type={props.type}
+            placeholder={props.placeholder}
           />
           {inputRef.error && (
             <span class="invalid-feedback ">{inputRef.message}</span>

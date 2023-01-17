@@ -42,27 +42,14 @@ export default defineComponent({
   name: 'App',
   setup() {
     const emailVal = ref('zzj')
+    const passwordVal = ref('')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
     ]
-    const emailRef = reactive({
-      val: '',
-      error: false,
-      message: ''
-    })
-    const validateEmail = () => {
-      if (emailRef.val.trim() === '') {
-        emailRef.error = true
-        emailRef.message = '请输入邮箱'
-      } else if (!emailReg.test(emailRef.val)) {
-        emailRef.error = true
-        emailRef.message = '邮箱格式不正确'
-      } else {
-        emailRef.error = false
-        emailRef.message = ''
-      }
-    }
+    const passwordRules: RulesProp = [
+      { type: 'required', message: '密码不能为空' }
+    ]
     return () => {
       return (
         <div class="container">
@@ -74,34 +61,18 @@ export default defineComponent({
               <ValidateInput
                 rules={emailRules}
                 v-model={emailVal.value}
+                type="text"
+                placeholder="请输入邮箱地址"
               ></ValidateInput>
-              {emailVal.value}
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">
-                邮箱地址
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                v-model={emailRef.val}
-                onBlur={validateEmail}
-              />
-              {/* eslint-disable-next-line */}
-              {emailRef.error ? (
-                <div class="form-text">{emailRef.message}</div>
-              ) : null}
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">
-                密码
-              </label>
-              <input
+              <label class="form-label">密码</label>
+              <ValidateInput
+                rules={passwordRules}
+                v-model={passwordVal.value}
                 type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-              />
+                placeholder="请输入密码"
+              ></ValidateInput>
             </div>
           </form>
         </div>
