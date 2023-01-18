@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList'
 import GlobalHeader, { UserProps } from './components/GlobalHeader'
@@ -35,8 +35,6 @@ const currentUser: UserProps = {
   isLogin: true,
   name: '者也'
 }
-
-const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 export default defineComponent({
   name: 'App',
