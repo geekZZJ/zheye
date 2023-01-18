@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList'
 import GlobalHeader, { UserProps } from './components/GlobalHeader'
 import ValidateInput, { RulesProp } from './components/ValidateInput'
+import ValidateForm from './components/ValidateForm'
 
 const testData: ColumnProps[] = [
   {
@@ -48,12 +49,18 @@ export default defineComponent({
     const passwordRules: RulesProp = [
       { type: 'required', message: '密码不能为空' }
     ]
+    const slots = {
+      submit: () => <span class="btn btn-danger">Submit</span>
+    }
+    const onFormSubmit = (result:boolean) => {
+      console.log('测试测试', result)
+    }
     return () => {
       return (
         <div class="container">
           <GlobalHeader user={currentUser} />
           <ColumnList list={testData} />
-          <form>
+          <ValidateForm v-slots={slots} {...{ onFormSubmit: onFormSubmit }}>
             <div class="mb-3">
               <label class="form-label">邮箱地址</label>
               <ValidateInput
@@ -72,7 +79,7 @@ export default defineComponent({
                 placeholder="请输入密码"
               ></ValidateInput>
             </div>
-          </form>
+          </ValidateForm>
         </div>
       )
     }
