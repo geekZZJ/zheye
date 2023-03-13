@@ -40,6 +40,7 @@ const currentUser: UserProps = {
 export default defineComponent({
   name: 'App',
   setup() {
+    const inputRef = ref(null)
     const emailVal = ref('zzj')
     const passwordVal = ref('')
     const emailRules: RulesProp = [
@@ -53,6 +54,7 @@ export default defineComponent({
       submit: () => <span class="btn btn-danger">Submit</span>
     }
     const onFormSubmit = (result:boolean) => {
+      // console.log(inputRef.value?.validateInput)
       console.log('测试测试', result)
     }
     return () => {
@@ -68,6 +70,7 @@ export default defineComponent({
                 v-model={emailVal.value}
                 type="text"
                 placeholder="请输入邮箱地址"
+                ref={inputRef}
               ></ValidateInput>
             </div>
             <div class="mb-3">

@@ -1,4 +1,4 @@
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, PropType, reactive, defineExpose } from 'vue'
 
 interface RuleProp {
   type: 'required' | 'email'
@@ -54,6 +54,10 @@ export default defineComponent({
       }
       return true
     }
+
+    defineExpose({
+      validateInput
+    })
 
     return () => {
       return (
