@@ -1,4 +1,5 @@
-import { defineComponent, PropType, reactive, defineExpose } from 'vue'
+import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { emitter } from './ValidateForm'
 
 interface RuleProp {
   type: 'required' | 'email'
@@ -18,7 +19,7 @@ export default defineComponent({
     placeholder: String
   },
   inheritAttrs: false,
-  setup(props, { emit }) {
+  setup(props, { emit, expose }) {
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -55,7 +56,11 @@ export default defineComponent({
       return true
     }
 
-    defineExpose({
+    onMounted(() => {
+      emitter.emit('form-item-created', inputRef.val)
+    })
+
+    expose({
       validateInput
     })
 
@@ -71,7 +76,7 @@ export default defineComponent({
             placeholder={props.placeholder}
           />
           {inputRef.error && (
-            <span class="invalid-feedback ">{inputRef.message}</span>
+            <span class="invalid-feedback">{inputRef.message}</span>
           )}
         </div>
       )
