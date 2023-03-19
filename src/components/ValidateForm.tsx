@@ -1,7 +1,11 @@
 import { defineComponent, onUnmounted } from 'vue'
 import mitt from 'mitt'
 
-export const emitter = mitt()
+type Events = {
+  'form-item-created': string
+}
+
+export const emitter = mitt<Events>()
 
 export default defineComponent({
   name: 'ValidateForm',
