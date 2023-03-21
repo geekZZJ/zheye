@@ -20,21 +20,21 @@ export default defineComponent({
     return () => {
       return (
         <nav class="navbar navbar-dark bg-primary justify-content-between mb-4 px-4">
-          <a href="#" class="navbar-brand">
+          <router-link to="/" class="navbar-brand">
             者也
-          </a>
+          </router-link>
           {/* eslint-disable-next-line */}
           {!props.user.isLogin ? (
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
-                <a href="#" class="btn btn-outline-light my-2">
+                <router-link to="/login" class="btn btn-outline-light my-2">
                   登陆
-                </a>
+                </router-link>
               </li>
               <li class="list-inline-item">
-                <a href="#" class="btn btn-outline-light my-2">
+                <router-link to="/login" class="btn btn-outline-light my-2">
                   注册
-                </a>
+                </router-link>
               </li>
             </ul>
           ) : (
