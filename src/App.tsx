@@ -41,8 +41,8 @@ export default defineComponent({
   name: 'App',
   setup() {
     const inputRef = ref<any>(null)
-    const emailVal = ref('zzj')
-    const passwordVal = ref('111')
+    const emailVal = ref('')
+    const passwordVal = ref('')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
@@ -54,7 +54,6 @@ export default defineComponent({
       submit: () => <span class="btn btn-danger">Submit</span>
     }
     const onFormSubmit = (result: boolean) => {
-      console.log(inputRef.value.validateInput())
       console.log('测试测试', result)
     }
     return () => {

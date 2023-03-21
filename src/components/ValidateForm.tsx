@@ -14,9 +14,8 @@ export default defineComponent({
   setup(props, { slots, emit }) {
     let funcArr: ValidateFunc[] = []
     const submitForm = () => {
-      const result = funcArr.every(item => item())
-      console.log('333333', result)
-      emit('form-submit', true)
+      const result = funcArr.map((func) => func()).every((item) => item)
+      emit('form-submit', result)
     }
     const callback = (func: ValidateFunc) => {
       funcArr.push(func)
