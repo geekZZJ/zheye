@@ -39,9 +39,12 @@ export default defineComponent({
                     />
                     <h5 class="card-title text-left">{item.title}</h5>
                     <p class="card-text">{item.desc}</p>
-                    <a href="#" class="btn btn-outline-primary">
+                    <router-link
+                      to={`/column/${item.id}`}
+                      class="btn btn-outline-primary"
+                    >
                       进入专栏
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </div>

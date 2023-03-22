@@ -1,11 +1,13 @@
 import { defineComponent, ref } from 'vue'
 import ValidateForm from '../components/ValidateForm'
 import ValidateInput, { RulesProp } from '../components/ValidateInput'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'LoginView',
   props: {},
   setup() {
+    const router = useRouter()
     const inputRef = ref<unknown>(null)
     const emailVal = ref('')
     const passwordVal = ref('')
@@ -25,6 +27,9 @@ export default defineComponent({
     }
     const onFormSubmit = (result: boolean) => {
       console.log('测试测试', result)
+      if (result) {
+        router.push('column/1')
+      }
     }
 
     return () => {
