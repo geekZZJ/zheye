@@ -1,11 +1,5 @@
 import { computed, defineComponent, PropType } from 'vue'
-
-export interface ColumnProps {
-  id: number
-  title: string
-  avatar?: string
-  desc: string
-}
+import { ColumnProps } from '@/testData'
 
 export default defineComponent({
   name: 'ColumnList',
@@ -38,7 +32,7 @@ export default defineComponent({
                       class="rounded-circle border border-light w-25 my-3"
                     />
                     <h5 class="card-title text-left">{item.title}</h5>
-                    <p class="card-text">{item.desc}</p>
+                    <p class="card-text">{item.description}</p>
                     <router-link
                       to={`/column/${item.id}`}
                       class="btn btn-outline-primary"

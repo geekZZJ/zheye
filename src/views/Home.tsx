@@ -1,38 +1,15 @@
 import { defineComponent } from 'vue'
-import ColumnList, { ColumnProps } from '../components/ColumnList'
+import { useColumnStore } from '@/store/column'
+import ColumnList from '../components/ColumnList'
 import calloutImg from '../assets/callout.svg'
-
-const testData: ColumnProps[] = [
-  {
-    id: 1,
-    title: 'test1的专栏',
-    desc: 'test1的专栏描述',
-    avatar: 'https://avatars0.githubusercontent.com/u/8186664?s=460&v=4'
-  },
-  {
-    id: 2,
-    title: 'test2的专栏',
-    desc: 'test2的专栏描述'
-    // avatar: 'https://avatars0.githubusercontent.com/u/8186664?s=460&v=4'
-  },
-  {
-    id: 3,
-    title: 'test3的专栏',
-    desc: 'test3的专栏描述',
-    avatar: 'https://avatars0.githubusercontent.com/u/8186664?s=460&v=4'
-  },
-  {
-    id: 4,
-    title: 'test4的专栏',
-    desc: 'test4的专栏描述',
-    avatar: 'https://avatars0.githubusercontent.com/u/8186664?s=460&v=4'
-  }
-]
 
 export default defineComponent({
   name: 'HomeView',
   props: {},
   setup() {
+    const columnStore = useColumnStore()
+    const { columns } = columnStore
+    console.log(columns)
     return () => {
       return (
         <div class="home-page">
@@ -50,7 +27,7 @@ export default defineComponent({
             </div>
           </section>
           <h4 class="font-weight-bold text-center">发现精彩</h4>
-          <ColumnList list={testData} />
+          <ColumnList list={columns} />
           <button class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25">
             加载更多
           </button>
