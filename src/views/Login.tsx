@@ -2,15 +2,11 @@ import { defineComponent, ref } from 'vue'
 import ValidateForm from '../components/ValidateForm'
 import ValidateInput, { RulesProp } from '../components/ValidateInput'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/store/user'
 
 export default defineComponent({
   name: 'LoginView',
   props: {},
   setup() {
-    const userStore = useUserStore()
-    userStore.name = '111111'
-    console.log(userStore.name)
     const router = useRouter()
     const inputRef = ref<unknown>(null)
     const emailVal = ref('')
@@ -24,7 +20,7 @@ export default defineComponent({
     ]
     const slots = {
       submit: () => (
-        <button type="submit" class="btn btn-primary btn-block btn-large">
+        <button type="button" class="btn btn-primary btn-block btn-large">
           登录
         </button>
       )
