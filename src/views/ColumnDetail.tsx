@@ -9,12 +9,12 @@ export default defineComponent({
   setup() {
     const columnStore = useColumnStore()
     const postStore = usePostStore()
-    const { columns } = columnStore
-    const { posts } = postStore
+    const { getColumnById } = columnStore
+    const { getPostsById } = postStore
     const route = useRoute()
     const currentId = +route.params.id
-    const column = columns.find((item) => item.id === currentId)
-    const list = posts.filter((post) => post.columnId === currentId)
+    const column = getColumnById(currentId)
+    const list = getPostsById(currentId)
 
     return () => {
       return (

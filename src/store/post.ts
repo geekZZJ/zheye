@@ -10,7 +10,9 @@ export const usePostStore = defineStore('post', {
     posts: testPosts
   }),
   getters: {
-    // getUserName: (state) => state.name
+    getPostsById: (state) => (id: number) => {
+      return state.posts.filter((post) => post.columnId === id)
+    }
   },
   actions: {
     // setName(name: string) {

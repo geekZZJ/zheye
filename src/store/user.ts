@@ -11,11 +11,9 @@ export const useUserStore = defineStore('user', {
     isLogin: false,
     name: ''
   }),
-  getters: {
-    // getUserName: (state) => state.name
-  },
+  getters: {},
   actions: {
-    login(state:boolean) {
+    login(state: boolean) {
       this.isLogin = state
       this.name = 'zzj'
     }

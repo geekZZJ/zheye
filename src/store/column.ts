@@ -10,7 +10,9 @@ export const useColumnStore = defineStore('column', {
     columns: testData
   }),
   getters: {
-    // getUserName: (state) => state.name
+    getColumnById: (state) => (id: number) => {
+      return state.columns.find((item) => item.id === id)
+    }
   },
   actions: {
     // setName(name: string) {
