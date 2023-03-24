@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType, toRefs } from 'vue'
 import { ColumnProps } from '@/testData'
 
 export default defineComponent({
@@ -10,14 +10,16 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { list } = toRefs(props)
     const ColumnList = computed(() => {
-      return props.list.map((item) => {
+      return list.value.map((item) => {
         if (!item.avatar) {
           item.avatar = require('@/assets/column.jpg')
         }
         return item
       })
     })
+
     return () => {
       return (
         <div class="row">

@@ -9,7 +9,6 @@ export default defineComponent({
   setup() {
     const columnStore = useColumnStore()
     const { columns } = columnStore
-    console.log(columns)
     return () => {
       return (
         <div class="home-page">

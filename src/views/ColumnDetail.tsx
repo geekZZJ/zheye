@@ -1,15 +1,21 @@
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { testData, testPosts } from '../testData'
+import { testPosts } from '../testData'
 import PostList from '@/components/PostList'
+import { useColumnStore } from '@/store/column'
+import { usePostStore } from '@/store/post'
 
 export default defineComponent({
   props: {},
   setup() {
+    const columnStore = useColumnStore()
+    const postStore = usePostStore()
+    const { columns } = columnStore
+    const { posts } = postStore
     const route = useRoute()
     const currentId = +route.params.id
-    const column = testData.find((item) => item.id === currentId)
-    const list = testPosts.filter((post) => post.columnId === currentId)
+    const column = columns.find((item) => item.id === currentId)
+    const list = posts.filter((post) => post.columnId === currentId)
 
     return () => {
       return (
