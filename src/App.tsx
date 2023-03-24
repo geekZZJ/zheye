@@ -1,15 +1,17 @@
 import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import GlobalHeader, { UserProps } from './components/GlobalHeader'
-
-const currentUser: UserProps = {
-  isLogin: false,
-  name: '者也'
-}
+import GlobalHeader from './components/GlobalHeader'
+import { useUserStore } from '@/store/user'
 
 export default defineComponent({
   name: 'App',
   setup() {
+    const userStore = useUserStore()
+    const { isLogin, name } = userStore
+    const currentUser = {
+      isLogin, name
+    }
+
     return () => {
       return (
         <div class="container">

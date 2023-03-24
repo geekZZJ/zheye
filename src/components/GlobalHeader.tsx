@@ -2,7 +2,7 @@ import { defineComponent, PropType } from 'vue'
 import IDropDown from './IDropdown'
 import DropdownItem from './DropdownItem'
 
-export interface UserProps {
+interface UserProps {
   isLogin: boolean
   name: string
   id?: number

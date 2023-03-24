@@ -2,20 +2,22 @@ import { defineStore } from 'pinia'
 
 interface UserProps {
   isLogin: boolean
-  name?: string
+  name: string
   id?: number
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserProps => ({
-    isLogin: false
+    isLogin: false,
+    name: ''
   }),
   getters: {
     // getUserName: (state) => state.name
   },
   actions: {
-    // setName(name: string) {
-    //   this.name = name
-    // }
+    login(state:boolean) {
+      this.isLogin = state
+      this.name = 'zzj'
+    }
   }
 })

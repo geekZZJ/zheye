@@ -1,6 +1,5 @@
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { testPosts } from '../testData'
 import PostList from '@/components/PostList'
 import { useColumnStore } from '@/store/column'
 import { usePostStore } from '@/store/post'
