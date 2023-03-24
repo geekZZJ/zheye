@@ -7,15 +7,11 @@ export default defineComponent({
   name: 'App',
   setup() {
     const userStore = useUserStore()
-    const { isLogin, name } = userStore
-    const currentUser = {
-      isLogin, name
-    }
 
     return () => {
       return (
         <div class="container">
-          <GlobalHeader user={currentUser} />
+          <GlobalHeader user={userStore} />
           <router-view></router-view>
           <footer class="text-center py-4 text-secondary bg-light mt-6">
             <small>
