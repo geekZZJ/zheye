@@ -42,9 +42,9 @@ export default defineComponent({
               <li class="list-inline-item">
                 <IDropDown title={props.user.name}>
                   <DropdownItem>
-                    <a href="#" class="dropdown-item">
+                    <router-link to="/create" class="dropdown-item">
                       新建文章
-                    </a>
+                    </router-link>
                   </DropdownItem>
                   <DropdownItem disabled>
                     <a href="#" class="dropdown-item">

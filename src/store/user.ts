@@ -8,8 +8,8 @@ interface UserProps {
 
 export const useUserStore = defineStore('user', {
   state: (): UserProps => ({
-    isLogin: false,
-    name: ''
+    isLogin: true,
+    name: '年少轻狂'
   }),
   getters: {},
   actions: {

@@ -7,6 +7,7 @@ interface RuleProp {
 }
 
 export type RulesProp = RuleProp[]
+type TagType = 'input' | 'textarea'
 
 const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
@@ -16,10 +17,15 @@ export default defineComponent({
     rules: Array as PropType<RulesProp>,
     modelValue: String,
     type: String,
-    placeholder: String
+    placeholder: String,
+    tag: {
+      type: String as PropType<TagType>,
+      default: 'input'
+    }
   },
   inheritAttrs: false,
-  setup(props, { emit, expose }) {
+  setup(props, { emit, expose, attrs }) {
+    console.log(attrs)
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -67,14 +73,25 @@ export default defineComponent({
     return () => {
       return (
         <div class="validate-input-container pb-3">
-          <input
-            class={`form-control ${inputRef.error ? 'is-invalid' : ''}`}
-            value={inputRef.val}
-            onBlur={validateInput}
-            onInput={updateValue}
-            type={props.type}
-            placeholder={props.placeholder}
-          />
+          {props.tag === 'input' ? (
+            <input
+              class={`form-control ${inputRef.error ? 'is-invalid' : ''}`}
+              value={inputRef.val}
+              onBlur={validateInput}
+              onInput={updateValue}
+              type={props.type}
+              placeholder={props.placeholder}
+            />
+          ) : (
+            <textarea
+              class={`form-control ${inputRef.error ? 'is-invalid' : ''}`}
+              value={inputRef.val}
+              onBlur={validateInput}
+              onInput={updateValue}
+              placeholder={props.placeholder}
+              {...attrs}
+            />
+          )}
           {inputRef.error && (
             <span class="invalid-feedback">{inputRef.message}</span>
           )}
