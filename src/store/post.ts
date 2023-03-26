@@ -15,8 +15,8 @@ export const usePostStore = defineStore('post', {
     }
   },
   actions: {
-    // setName(name: string) {
-    //   this.name = name
-    // }
+    createPost(newPost: PostProps) {
+      this.posts.push(newPost)
+    }
   }
 })

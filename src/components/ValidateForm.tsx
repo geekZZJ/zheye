@@ -33,7 +33,7 @@ export default defineComponent({
             {slots.submit ? (
               slots.submit()
             ) : (
-              <button type="submit" class="btn btn-primary">
+              <button type="button" class="btn btn-primary">
                 提交
               </button>
             )}

@@ -21,11 +21,11 @@ export default defineComponent({
     tag: {
       type: String as PropType<TagType>,
       default: 'input'
-    }
+    },
+    rows: String
   },
   inheritAttrs: false,
-  setup(props, { emit, expose, attrs }) {
-    console.log(attrs)
+  setup(props, { emit, expose }) {
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -89,7 +89,7 @@ export default defineComponent({
               onBlur={validateInput}
               onInput={updateValue}
               placeholder={props.placeholder}
-              {...attrs}
+              rows={props.rows}
             />
           )}
           {inputRef.error && (
