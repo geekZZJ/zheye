@@ -25,7 +25,6 @@ export default defineComponent({
       return (
         <div class="dropdown" ref={dropdownRef}>
           <a
-            href="#"
             class="btn btn-outline-light my-2 dropdown-toggle"
             onClick={toggleOpen}
           >

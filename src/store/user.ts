@@ -9,7 +9,7 @@ interface UserProps {
 
 export const useUserStore = defineStore('user', {
   state: (): UserProps => ({
-    isLogin: true,
+    isLogin: false,
     name: '年少轻狂',
     columnId: 1
   }),

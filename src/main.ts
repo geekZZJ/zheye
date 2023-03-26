@@ -1,14 +1,8 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import App from './App'
-import { routes } from './router'
+import router from './router'
 
-const routerHistory = createWebHistory()
-const router = createRouter({
-  history: routerHistory,
-  routes
-})
 const pinia = createPinia()
 
 const app = createApp(App)

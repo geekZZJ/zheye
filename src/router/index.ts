@@ -1,9 +1,11 @@
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Column from '@/views/ColumnDetail'
 import CreatePost from '@/views/CreatePost'
+import { useUserStore } from '@/store/user'
 
-export const routes = [
+const routes = [
   {
     path: '/',
     name: 'home',
@@ -25,3 +27,21 @@ export const routes = [
     component: CreatePost
   }
 ]
+
+const routerHistory = createWebHistory()
+const router = createRouter({
+  history: routerHistory,
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const { isLogin } = userStore
+  if (to.name !== 'login' && !isLogin) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+
+export default router
