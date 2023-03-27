@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { useColumnStore } from '@/store/column'
 import ColumnList from '../components/ColumnList'
 import calloutImg from '../assets/callout.svg'
@@ -9,6 +9,9 @@ export default defineComponent({
   setup() {
     const columnStore = useColumnStore()
     const { columns } = columnStore
+    onMounted(() => {
+      columnStore.fetchColumns()
+    })
     return () => {
       return (
         <div class="home-page">
