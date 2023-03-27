@@ -14,7 +14,10 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      redirectAlreadyLogin: true
+    }
   },
   {
     path: '/column/:id',
@@ -24,7 +27,10 @@ const routes = [
   {
     path: '/create',
     name: 'create',
-    component: CreatePost
+    component: CreatePost,
+    meta: {
+      requiredLogin: true
+    }
   }
 ]
 
@@ -37,8 +43,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const { isLogin } = userStore
-  if (to.name !== 'login' && !isLogin) {
+  if (to.meta.requiredLogin && !isLogin) {
     next('/login')
+  } else if (to.meta.redirectAlreadyLogin && isLogin) {
+    next('/')
   } else {
     next()
   }
