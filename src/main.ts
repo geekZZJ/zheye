@@ -4,8 +4,9 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 
-axios.defaults.baseURL =
-  'http://zhangblog.cn:20080/mock/6421bb3451512e000c945ee0'
+// axios.defaults.baseURL =
+//   'http://zhangblog.cn:20080/mock/6421bb3451512e000c945ee0'
+axios.defaults.baseURL = 'http://localhost:36742'
 
 const pinia = createPinia()
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { testData, ColumnProps } from '@/testData'
+import { ColumnProps } from '@/testData'
 import axios from 'axios'
 
 interface ColumnsProps {
@@ -8,7 +8,7 @@ interface ColumnsProps {
 
 export const useColumnStore = defineStore('column', {
   state: (): ColumnsProps => ({
-    columns: testData
+    columns: []
   }),
   getters: {
     getColumnById: (state) => (id: number) => {
@@ -18,8 +18,8 @@ export const useColumnStore = defineStore('column', {
   actions: {
     async fetchColumns() {
       const result = await axios.get('/columns')
-      // this.columns = result.data.data.list
-      console.log('33333', result)
+      // this.columns = result.data.list
+      this.columns.push(...result.data.list)
     }
   }
 })
