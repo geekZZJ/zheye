@@ -33,16 +33,16 @@ export default defineComponent({
     const onFormSubmit = (result: boolean) => {
       console.log('测试测试', result)
       if (result) {
-        const { columnId } = userStore
-        const newPost: PostProps = {
-          id: new Date().getTime(),
-          title: titleVal.value,
-          content: contentVal.value,
-          columnId,
-          createdAt: new Date().toLocaleString()
-        }
-        postStore.createPost(newPost)
-        router.push(`/column/${newPost.columnId}`)
+        // const { columnId } = userStore
+        // const newPost: PostProps = {
+        //   id: new Date().getTime(),
+        //   title: titleVal.value,
+        //   content: contentVal.value,
+        //   columnId,
+        //   createdAt: new Date().toLocaleString()
+        // }
+        // postStore.createPost(newPost)
+        // router.push(`/column/${newPost.columnId}`)
       }
     }
 

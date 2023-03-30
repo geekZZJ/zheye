@@ -13,25 +13,25 @@ export default defineComponent({
       return (
         <div class="post-list">
           {props.list.map((item) => (
-            <article key={item.id} class="card mb-3 shadow-sm">
+            <article key={item._id} class="card mb-3 shadow-sm">
               <div class="card-body">
                 <h4>
-                  <router-link to={`/posts/${item.id}/`}>
-                    {item.title}
-                  </router-link>
+                  {/* <router-link to={`/posts/${item._id}/`}> */}
+                  {item.title}
+                  {/* </router-link> */}
                 </h4>
                 <div class="row my-3 align-items-center">
                   {item.image && (
                     <div class="col-4">
                       <img
-                        src={item.image}
+                        src={item.image.url}
                         alt={item.title}
                         class="rounded-lg w-100"
                       />
                     </div>
                   )}
                   <p class={`text-muted ${item.image ? 'col-8' : null}`}>
-                    {item.content}
+                    {item.excerpt}
                   </p>
                 </div>
                 <span class="text-muted">{item.createdAt}</span>

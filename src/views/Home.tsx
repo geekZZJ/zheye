@@ -2,13 +2,14 @@ import { defineComponent, onMounted } from 'vue'
 import { useColumnStore } from '@/store/column'
 import ColumnList from '../components/ColumnList'
 import calloutImg from '../assets/callout.svg'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'HomeView',
   props: {},
   setup() {
     const columnStore = useColumnStore()
-    const { columns } = columnStore
+    const { columns } = storeToRefs(columnStore)
     onMounted(() => {
       columnStore.fetchColumns()
     })
@@ -29,7 +30,7 @@ export default defineComponent({
             </div>
           </section>
           <h4 class="font-weight-bold text-center">发现精彩</h4>
-          <ColumnList list={columns} />
+          <ColumnList list={columns.value} />
           <button class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25">
             加载更多
           </button>

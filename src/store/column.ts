@@ -11,15 +11,18 @@ export const useColumnStore = defineStore('column', {
     columns: []
   }),
   getters: {
-    getColumnById: (state) => (id: number) => {
-      return state.columns.find((item) => item.id === id)
+    getColumnById: (state) => (id: string) => {
+      return state.columns.find((item) => item._id === id)
     }
   },
   actions: {
     async fetchColumns() {
       const result = await axios.get('/columns')
-      // this.columns = result.data.list
-      this.columns.push(...result.data.list)
+      this.columns = result.data.list
+    },
+    async fetchColumn(cid: string) {
+      const result = await axios.get(`/columns/${cid}`)
+      this.columns = [result.data]
     }
   }
 })

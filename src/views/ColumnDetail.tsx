@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import PostList from '@/components/PostList'
 import { useColumnStore } from '@/store/column'
@@ -12,29 +12,34 @@ export default defineComponent({
     const { getColumnById } = columnStore
     const { getPostsById } = postStore
     const route = useRoute()
-    const currentId = +route.params.id
-    const column = getColumnById(currentId)
-    const list = getPostsById(currentId)
+    const currentId = route.params.id + ''
+
+    onMounted(() => {
+      columnStore.fetchColumn(currentId)
+      postStore.fetchPosts(currentId)
+    })
+    const column = computed(() => getColumnById(currentId))
+    const list = computed(() => getPostsById(currentId))
 
     return () => {
       return (
         <div class="column-detail-page w-75 mx-auto">
-          {column && (
+          {column.value && (
             <div class="column-info row mb-4 border-bottom pb-4 align-items-center">
               <div class="col-3 text-center">
                 <img
-                  src={column.avatar}
-                  alt={column.title}
+                  src={column.value.avatar.url}
+                  alt={column.value.title}
                   class="rounded-circle border w-100"
                 />
               </div>
               <div class="col-9">
-                <h4>{column.title}</h4>
-                <p class="text-muted">{column.description}</p>
+                <h4>{column.value.title}</h4>
+                <p class="text-muted">{column.value.description}</p>
               </div>
             </div>
           )}
-          <PostList list={list}></PostList>
+          <PostList list={list.value}></PostList>
         </div>
       )
     }

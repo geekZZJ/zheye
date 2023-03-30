@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { PostProps, testPosts } from '@/testData'
+import { PostProps } from '@/testData'
+import axios from 'axios'
 
 interface PostsProps {
   posts: PostProps[]
@@ -7,16 +8,20 @@ interface PostsProps {
 
 export const usePostStore = defineStore('post', {
   state: (): PostsProps => ({
-    posts: testPosts
+    posts: []
   }),
   getters: {
-    getPostsById: (state) => (id: number) => {
-      return state.posts.filter((post) => post.columnId === id)
+    getPostsById: (state) => (id: string) => {
+      return state.posts.filter((post) => post.column === id)
     }
   },
   actions: {
     createPost(newPost: PostProps) {
       this.posts.push(newPost)
+    },
+    async fetchPosts(cid: string) {
+      const result = await axios.get(`/columns/${cid}/posts`)
+      this.posts.push(...result.data.list)
     }
   }
 })
