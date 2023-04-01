@@ -27,11 +27,14 @@ export default defineComponent({
         </button>
       )
     }
-    const onFormSubmit = (result: boolean) => {
+    const onFormSubmit = async (result: boolean) => {
       console.log('测试测试', result)
       if (result) {
-        router.push('/')
-        userStore.login(true)
+        const result = await userStore.login(emailVal.value, passwordVal.value)
+        if (result) {
+          await userStore.fetchCurrentUser()
+          router.push('/')
+        }
       }
     }
 

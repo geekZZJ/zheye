@@ -1,12 +1,7 @@
 import { defineComponent, PropType } from 'vue'
 import IDropDown from './IDropdown'
 import DropdownItem from './DropdownItem'
-
-interface UserProps {
-  isLogin: boolean
-  name: string
-  id?: number
-}
+import { UserProps } from '@/store/user'
 
 export default defineComponent({
   name: 'GlobalHeader',
@@ -40,7 +35,7 @@ export default defineComponent({
           ) : (
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
-                <IDropDown title={props.user.name}>
+                <IDropDown title={props.user.nicknName}>
                   <DropdownItem>
                     <router-link to="/create" class="dropdown-item">
                       新建文章
