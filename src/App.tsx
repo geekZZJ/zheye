@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from './components/GlobalHeader'
 import { useUserStore } from '@/store/user'
 import { useCommonStore } from './store/common'
+import Loader from './components/Loader'
 
 export default defineComponent({
   name: 'App',
@@ -15,7 +16,8 @@ export default defineComponent({
       return (
         <div class="container">
           <GlobalHeader user={userStore} />
-          {loading.value && <h1>正在读取</h1>}
+          <Loader text="拼命加载中" background="rgba(0,0,0,.8)"></Loader>
+          {/* {loading.value && <Loader></Loader>} */}
           <router-view></router-view>
           <footer class="text-center py-4 text-secondary bg-light mt-6">
             <small>
