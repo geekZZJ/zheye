@@ -1,4 +1,4 @@
-import { defineComponent, toRefs } from 'vue'
+import { Teleport, defineComponent, onUnmounted, toRefs } from 'vue'
 import { createUseStyles } from 'vue-jss'
 
 const useStyles = createUseStyles({
@@ -25,18 +25,28 @@ export default defineComponent({
   setup(props) {
     const classesRef = useStyles()
     const { background, text } = toRefs(props)
+    const node = document.createElement('div')
+    node.id = 'back'
+    document.body.appendChild(node)
+
+    onUnmounted(() => {
+      document.body.removeChild(node)
+    })
+
     return () => {
       const classes = classesRef.value
       return (
-        <div
-          class={`d-flex justify-content-center align-items-center h-100 w-100 ${classes['loading-container']}`}
-          style={{ backgroundColor: background.value }}
-        >
-          <div class="loading-content">
-            <div class="spinner-border text-primary" role="status"></div>
-            {text.value && <p class="text-primary small">{text.value}</p>}
+        <Teleport to="#back">
+          <div
+            class={`d-flex justify-content-center align-items-center h-100 w-100 ${classes['loading-container']}`}
+            style={{ backgroundColor: background.value }}
+          >
+            <div class="loading-content">
+              <div class="spinner-border text-primary" role="status"></div>
+              {text.value && <p class="text-primary small">{text.value}</p>}
+            </div>
           </div>
-        </div>
+        </Teleport>
       )
     }
   }

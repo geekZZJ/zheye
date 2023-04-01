@@ -16,8 +16,7 @@ export default defineComponent({
       return (
         <div class="container">
           <GlobalHeader user={userStore} />
-          <Loader text="拼命加载中" background="rgba(0,0,0,.8)"></Loader>
-          {/* {loading.value && <Loader></Loader>} */}
+          {loading.value && <Loader></Loader>}
           <router-view></router-view>
           <footer class="text-center py-4 text-secondary bg-light mt-6">
             <small>
