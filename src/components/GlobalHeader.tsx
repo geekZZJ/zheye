@@ -26,7 +26,7 @@ export default defineComponent({
                 </router-link>
               </li>
               <li class="list-inline-item">
-                <router-link to="/login" class="btn btn-outline-light my-2">
+                <router-link to="/signup" class="btn btn-outline-light my-2">
                   注册
                 </router-link>
               </li>

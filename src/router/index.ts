@@ -3,6 +3,7 @@ import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Column from '@/views/ColumnDetail'
 import CreatePost from '@/views/CreatePost'
+import SignUp from '@/views/SignUp'
 import { useUserStore } from '@/store/user'
 
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
     meta: {
       redirectAlreadyLogin: true
     }
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUp
   },
   {
     path: '/column/:id',
