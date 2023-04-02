@@ -30,7 +30,6 @@ export default defineComponent({
           >
             {props.title}
           </a>
-          {/* eslint-disable-next-line */}
           {isOpen.value ? (
             <ul class="dropdown-menu" style="display:block">
               {slots.default?.()}

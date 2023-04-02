@@ -18,7 +18,6 @@ export default defineComponent({
           <router-link to="/" class="navbar-brand">
             者也
           </router-link>
-          {/* eslint-disable-next-line */}
           {!props.user.isLogin ? (
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
