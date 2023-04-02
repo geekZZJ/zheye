@@ -1,5 +1,6 @@
-import { Teleport, defineComponent, onUnmounted, toRefs } from 'vue'
+import { Teleport, defineComponent, toRefs } from 'vue'
 import { createUseStyles } from 'vue-jss'
+import useDOMCreate from '@/hooks/useDOMCreate'
 
 const useStyles = createUseStyles({
   'loading-container': {
@@ -25,13 +26,7 @@ export default defineComponent({
   setup(props) {
     const classesRef = useStyles()
     const { background, text } = toRefs(props)
-    const node = document.createElement('div')
-    node.id = 'back'
-    document.body.appendChild(node)
-
-    onUnmounted(() => {
-      document.body.removeChild(node)
-    })
+    useDOMCreate('back')
 
     return () => {
       const classes = classesRef.value

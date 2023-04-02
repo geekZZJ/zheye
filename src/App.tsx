@@ -4,6 +4,7 @@ import GlobalHeader from './components/GlobalHeader'
 import { useUserStore } from '@/store/user'
 import { useCommonStore } from './store/common'
 import Loader from './components/Loader'
+import Message from './components/Message'
 
 export default defineComponent({
   name: 'App',
@@ -17,8 +18,10 @@ export default defineComponent({
       return (
         <div class="container">
           <GlobalHeader user={userStore} />
-          <h1>{error.value.message}</h1>
           {loading.value && <Loader></Loader>}
+          {error.value.status && (
+            <Message type="error" message={error.value.message}></Message>
+          )}
           <router-view></router-view>
           <footer class="text-center py-4 text-secondary bg-light mt-6">
             <small>
