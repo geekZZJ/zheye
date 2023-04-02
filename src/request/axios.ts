@@ -27,8 +27,13 @@ axios.interceptors.response.use(
   },
   (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
+    const { err } = error.response
     const commonStore = useCommonStore()
     commonStore.setLoading(false)
+    commonStore.setError({
+      status: true,
+      message: err
+    })
     return Promise.reject(error)
   }
 )

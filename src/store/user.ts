@@ -16,19 +16,20 @@ export const useUserStore = defineStore('user', {
     nicknName: '',
     column: '',
     _id: '',
-    token: '',
+    token: localStorage.getItem('token') || '',
     email: ''
   }),
   getters: {},
   actions: {
     async login(email: string, password: string) {
-      const result = await axios.post('/user/login', {
+      const result = await axios.post('/user/login1', {
         email,
         password
       })
       const token = result.data.token
       if (token) {
         this.token = token
+        localStorage.setItem('token', token)
         axios.defaults.headers.common.Authorization = `Bearer ${token}`
         return true
       } else {
