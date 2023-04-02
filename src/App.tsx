@@ -1,10 +1,10 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from './components/GlobalHeader'
 import { useUserStore } from '@/store/user'
 import { useCommonStore } from './store/common'
 import Loader from './components/Loader'
-import Message from './components/Message'
+import createMessage from './components/createMessage'
 
 export default defineComponent({
   name: 'App',
@@ -13,15 +13,19 @@ export default defineComponent({
     const commonStore = useCommonStore()
     const loading = computed(() => commonStore.loading)
     const error = computed(() => commonStore.error)
+    watch(
+      () => error.value.status,
+      () => {
+        const { status, message = '网络错误' } = error.value
+        if (status) createMessage(message, 'error')
+      }
+    )
 
     return () => {
       return (
         <div class="container">
           <GlobalHeader user={userStore} />
           {loading.value && <Loader></Loader>}
-          {error.value.status && (
-            <Message type="error" message={error.value.message}></Message>
-          )}
           <router-view></router-view>
           <footer class="text-center py-4 text-secondary bg-light mt-6">
             <small>

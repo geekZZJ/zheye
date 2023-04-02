@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 interface GlobalErrorProps {
   status: boolean
-  message?: string
+  message: string
 }
 
 interface CommonProps {
@@ -13,7 +13,7 @@ interface CommonProps {
 export const useCommonStore = defineStore('common', {
   state: (): CommonProps => ({
     loading: false,
-    error: { status: false }
+    error: { status: false, message: '' }
   }),
   getters: {},
   actions: {

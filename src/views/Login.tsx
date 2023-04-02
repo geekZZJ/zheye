@@ -3,6 +3,7 @@ import ValidateForm from '../components/ValidateForm'
 import ValidateInput, { RulesProp } from '../components/ValidateInput'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import createMessage from '@/components/createMessage'
 
 export default defineComponent({
   name: 'LoginView',
@@ -33,7 +34,10 @@ export default defineComponent({
         const result = await userStore.login(emailVal.value, passwordVal.value)
         if (result) {
           await userStore.fetchCurrentUser()
-          router.push('/')
+          createMessage('登录成功 2秒后跳转首页', 'success')
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
         }
       }
     }

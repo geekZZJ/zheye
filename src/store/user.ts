@@ -22,7 +22,7 @@ export const useUserStore = defineStore('user', {
   getters: {},
   actions: {
     async login(email: string, password: string) {
-      const result = await axios.post('/user/login1', {
+      const result = await axios.post('/user/login', {
         email,
         password
       })

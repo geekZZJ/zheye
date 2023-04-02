@@ -10,6 +10,7 @@ axios.interceptors.request.use(
   (config) => {
     const commonStore = useCommonStore()
     commonStore.setLoading(true)
+    commonStore.setError({ status: false, message: ' ' })
     return config
   },
   (error) => {
