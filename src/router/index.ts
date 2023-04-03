@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '@/views/Home'
-import Login from '@/views/Login'
-import Column from '@/views/ColumnDetail'
-import CreatePost from '@/views/CreatePost'
-import SignUp from '@/views/SignUp'
 import { useUserStore } from '@/store/user'
+const Home = () => import('@/views/Home')
+const Login = () => import('@/views/Login')
+const Column = () => import('@/views/ColumnDetail')
+const CreatePost = () => import('@/views/CreatePost')
+const SignUp = () => import('@/views/SignUp')
 
 const routes = [
   {
