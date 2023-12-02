@@ -35,7 +35,7 @@ const routes = [
     name: 'create',
     component: CreatePost,
     meta: {
-      requiredLogin: true
+      requiredLogin: false
     }
   }
 ]

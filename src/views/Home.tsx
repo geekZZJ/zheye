@@ -3,6 +3,10 @@ import { useColumnStore } from '@/store/column'
 import ColumnList from '../components/ColumnList'
 import calloutImg from '../assets/callout.svg'
 import { storeToRefs } from 'pinia'
+import Uploader from '@/components/Uploader'
+import createMessage from '@/components/createMessage'
+import { ImageProps } from '@/testData'
+import { ResponseType } from '@/store/common'
 
 export default defineComponent({
   name: 'HomeView',
@@ -13,6 +17,17 @@ export default defineComponent({
     onMounted(() => {
       columnStore.fetchColumns()
     })
+    const beforeUpload = (file: File) => {
+      const isJPG = file.type === 'image/jpeg'
+      if (!isJPG) {
+        createMessage('上传图片只能是JPG格式', 'error')
+      }
+      return isJPG
+    }
+    const onFileUploaded = (rowData: ResponseType<ImageProps>) => {
+      createMessage(`上传图片id ${rowData.data._id}`, 'success')
+    }
+
     return () => {
       return (
         <div class="home-page">
@@ -29,6 +44,10 @@ export default defineComponent({
               </div>
             </div>
           </section>
+          <Uploader
+            beforeUpload={beforeUpload}
+            onFile-uploaded={onFileUploaded}
+          ></Uploader>
           <h4 class="font-weight-bold text-center">发现精彩</h4>
           <ColumnList list={columns.value} />
           <button class="btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25">

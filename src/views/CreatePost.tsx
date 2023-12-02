@@ -3,8 +3,8 @@ import ValidateForm from '@/components/ValidateForm'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput'
 import { useUserStore } from '@/store/user'
 import { usePostStore } from '@/store/post'
-import { PostProps } from '@/testData'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 export default defineComponent({
   props: {},
@@ -46,10 +46,27 @@ export default defineComponent({
       }
     }
 
+    const handleFileChange = (e: Event) => {
+      const target = e.target as HTMLInputElement
+      const files = target.files
+      if (files) {
+        const uploadFile = files[0]
+        const formData = new FormData()
+        formData.append(uploadFile.name, uploadFile)
+        // axios.post('/upload', formData, {
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data'
+        //   }
+        // })
+        console.log('formData', formData)
+      }
+    }
+
     return () => {
       return (
         <div class="create-post-page">
           <h4>{isEditMode ? '编辑文章' : '新建文章'}</h4>
+          <input type="file" name="file" onChange={handleFileChange} />
           <ValidateForm v-slots={slots} {...{ onFormSubmit: onFormSubmit }}>
             <div class="mb-3">
               <label class="form-label">文章标题：</label>

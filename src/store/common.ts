@@ -10,6 +10,12 @@ interface CommonProps {
   error: GlobalErrorProps
 }
 
+export interface ResponseType<P> {
+  code: number
+  msg: string
+  data: P
+}
+
 export const useCommonStore = defineStore('common', {
   state: (): CommonProps => ({
     loading: false,
