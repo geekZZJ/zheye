@@ -15,7 +15,7 @@ export default defineComponent({
     }
   },
   emits: ['file-uploaded', 'file-uploaded-error'],
-  setup(props, context) {
+  setup(props, { slots, emit }) {
     const fileInputRef = ref<null | HTMLInputElement>(null)
     const fileStatus = ref<UploadStatus>('ready')
 
@@ -44,11 +44,11 @@ export default defineComponent({
           })
           .then((res) => {
             fileStatus.value = 'success'
-            context.emit('file-uploaded', res.data)
+            emit('file-uploaded', res.data)
           })
           .catch((err) => {
             fileStatus.value = 'error'
-            context.emit('file-uploaded-error', err)
+            emit('file-uploaded-error', err)
           })
           .finally(() => {
             if (fileInputRef.value) {
@@ -61,13 +61,31 @@ export default defineComponent({
     return () => {
       return (
         <div class="file-upload">
-          <button class="btn btn-primary" onClick={triggerUpload}>
+          <div class="file-upload-container" onClick={triggerUpload}>
             {fileStatus.value === 'loading' ? (
-              <span>正在上传...</span>
-            ) : (
-              <span>点击上传</span>
-            )}
-          </button>
+              slots.loading ? (
+                slots.loading()
+              ) : (
+                <button class="btn btn-primary" disabled>
+                  正在上传...
+                </button>
+              )
+            ) : null}
+            {fileStatus.value === 'success' ? (
+              slots.uploaded ? (
+                slots.uploaded()
+              ) : (
+                <button class="btn btn-primary">上传成功</button>
+              )
+            ) : null}
+            {fileStatus.value === 'ready' ? (
+              slots.default ? (
+                slots.default()
+              ) : (
+                <button class="btn btn-primary">点击上传</button>
+              )
+            ) : null}
+          </div>
 
           <input
             type="file"

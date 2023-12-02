@@ -1,4 +1,4 @@
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useColumnStore } from '@/store/column'
 import ColumnList from '../components/ColumnList'
 import calloutImg from '../assets/callout.svg'
@@ -14,9 +14,12 @@ export default defineComponent({
   setup() {
     const columnStore = useColumnStore()
     const { columns } = storeToRefs(columnStore)
+    const uploadResRef = ref()
+
     onMounted(() => {
       columnStore.fetchColumns()
     })
+
     const beforeUpload = (file: File) => {
       const isJPG = file.type === 'image/jpeg'
       if (!isJPG) {
@@ -26,6 +29,17 @@ export default defineComponent({
     }
     const onFileUploaded = (rowData: ResponseType<ImageProps>) => {
       createMessage(`上传图片id ${rowData.data._id}`, 'success')
+      uploadResRef.value = rowData
+    }
+
+    const slot = {
+      loading: () => (
+        <div class="spinner-border" role="status">
+          <span class="sr-only"></span>
+        </div>
+      ),
+      default: () => <h2>点击上传</h2>,
+      uploaded: () => <img src={uploadResRef.value.data.url} alt="" />
     }
 
     return () => {
@@ -47,6 +61,7 @@ export default defineComponent({
           <Uploader
             beforeUpload={beforeUpload}
             onFile-uploaded={onFileUploaded}
+            v-slots={slot}
           ></Uploader>
           <h4 class="font-weight-bold text-center">发现精彩</h4>
           <ColumnList list={columns.value} />
