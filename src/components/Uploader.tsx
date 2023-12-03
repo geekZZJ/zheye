@@ -14,8 +14,9 @@ export default defineComponent({
       type: Function as PropType<CheckFunction>
     }
   },
+  inheritAttrs: false,
   emits: ['file-uploaded', 'file-uploaded-error'],
-  setup(props, { slots, emit }) {
+  setup(props, { slots, emit, attrs }) {
     const fileInputRef = ref<null | HTMLInputElement>(null)
     const fileStatus = ref<UploadStatus>('ready')
 
@@ -61,7 +62,7 @@ export default defineComponent({
     return () => {
       return (
         <div class="file-upload">
-          <div class="file-upload-container" onClick={triggerUpload}>
+          <div class="file-upload-container" onClick={triggerUpload} {...attrs}>
             {fileStatus.value === 'loading' ? (
               slots.loading ? (
                 slots.loading()

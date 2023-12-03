@@ -45,6 +45,11 @@ export const useUserStore = defineStore('user', {
         this._id = result.data._id
         this.column = result.data.column
       }
+    },
+    logout() {
+      this.token = ''
+      localStorage.removeItem('token')
+      delete axios.defaults.headers.common.Authorization
     }
   }
 })

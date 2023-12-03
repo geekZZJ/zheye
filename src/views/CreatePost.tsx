@@ -4,7 +4,11 @@ import ValidateInput, { RulesProp } from '@/components/ValidateInput'
 import { useUserStore } from '@/store/user'
 import { usePostStore } from '@/store/post'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import Uploader from '@/components/Uploader'
+import './CreatePost.css'
+import { ImageProps } from '@/testData'
+import createMessage from '@/components/createMessage'
+import { ResponseType } from '@/store/common'
 
 export default defineComponent({
   props: {},
@@ -15,9 +19,12 @@ export default defineComponent({
     const isEditMode = false
     const titleVal = ref('')
     const contentVal = ref('')
+    const uploadResRef = ref()
+
     const titleRules: RulesProp = [
       { type: 'required', message: '文章标题不能为空' }
     ]
+
     const contentRules: RulesProp = [
       { type: 'required', message: '文章详情不能为空' }
     ]
@@ -28,6 +35,29 @@ export default defineComponent({
           {isEditMode ? '更新文章' : '发表文章'}
         </button>
       )
+    }
+
+    const slot = {
+      loading: () => (
+        <div class="d-flex">
+          <div class="spinner-border text-secondary" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <h2>正在上传</h2>
+        </div>
+      ),
+      default: () => <h2>点击上传头图</h2>,
+      uploaded: () => (
+        <div class="uploaded-area">
+          <img src={uploadResRef.value.data.url} alt="" />
+          <h3>点击重新上传</h3>
+        </div>
+      )
+    }
+
+    const onFileUploaded = (rowData: ResponseType<ImageProps>) => {
+      createMessage(`上传图片id ${rowData.data._id}`, 'success')
+      uploadResRef.value = rowData
     }
 
     const onFormSubmit = (result: boolean) => {
@@ -46,27 +76,16 @@ export default defineComponent({
       }
     }
 
-    const handleFileChange = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      const files = target.files
-      if (files) {
-        const uploadFile = files[0]
-        const formData = new FormData()
-        formData.append(uploadFile.name, uploadFile)
-        // axios.post('/upload', formData, {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data'
-        //   }
-        // })
-        console.log('formData', formData)
-      }
-    }
-
     return () => {
       return (
         <div class="create-post-page">
           <h4>{isEditMode ? '编辑文章' : '新建文章'}</h4>
-          <input type="file" name="file" onChange={handleFileChange} />
+          <Uploader
+            action="/upload"
+            class="d-flex align-items-center justify-content-center bg-light text-secondary w-100 my-4"
+            v-slots={slot}
+            onFile-uploaded={onFileUploaded}
+          ></Uploader>
           <ValidateForm v-slots={slots} {...{ onFormSubmit: onFormSubmit }}>
             <div class="mb-3">
               <label class="form-label">文章标题：</label>
