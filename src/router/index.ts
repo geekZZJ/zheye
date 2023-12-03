@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import axios from 'axios'
 const Home = () => import('@/views/Home')
 const Login = () => import('@/views/Login')
 const Column = () => import('@/views/ColumnDetail')
@@ -35,7 +36,7 @@ const routes = [
     name: 'create',
     component: CreatePost,
     meta: {
-      requiredLogin: false
+      requiredLogin: true
     }
   }
 ]
@@ -48,13 +49,30 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-  const { isLogin } = userStore
-  if (to.meta.requiredLogin && !isLogin) {
-    next('/login')
-  } else if (to.meta.redirectAlreadyLogin && isLogin) {
-    next('/')
+  const { token, isLogin } = userStore
+  const { requiredLogin, redirectAlreadyLogin } = to.meta
+  if (!isLogin) {
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`
+      userStore
+        .fetchCurrentUser()
+        .then((res) => {
+          console.log(res)
+          if (redirectAlreadyLogin) next('/')
+          else next()
+        })
+        .catch((e) => {
+          console.error(e)
+          localStorage.removeItem('token')
+          next('login')
+        })
+    } else {
+      if (requiredLogin) next('login')
+      else next()
+    }
   } else {
-    next()
+    if (redirectAlreadyLogin) next('/')
+    else next()
   }
 })
 
