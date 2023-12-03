@@ -9,6 +9,7 @@ import './CreatePost.css'
 import { ImageProps } from '@/testData'
 import createMessage from '@/components/createMessage'
 import { ResponseType } from '@/store/common'
+import { beforeUploadCheck } from '@/helper'
 
 export default defineComponent({
   props: {},
@@ -60,6 +61,21 @@ export default defineComponent({
       uploadResRef.value = rowData
     }
 
+    const uploadCheck = (file: File) => {
+      const result = beforeUploadCheck(file, {
+        format: ['image/jpeg', 'image/png'],
+        size: 1
+      })
+      const { passed, error } = result
+      if (error === 'format') {
+        createMessage('上传图片只能是jpg/png格式', 'error')
+      }
+      if (error === 'size') {
+        createMessage('上传图片大小不能超过1MB', 'error')
+      }
+      return passed
+    }
+
     const onFormSubmit = (result: boolean) => {
       console.log('测试测试', result)
       if (result) {
@@ -85,6 +101,7 @@ export default defineComponent({
             class="d-flex align-items-center justify-content-center bg-light text-secondary w-100 my-4"
             v-slots={slot}
             onFile-uploaded={onFileUploaded}
+            beforeUpload={uploadCheck}
           ></Uploader>
           <ValidateForm v-slots={slots} {...{ onFormSubmit: onFormSubmit }}>
             <div class="mb-3">
