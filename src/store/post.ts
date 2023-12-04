@@ -22,6 +22,10 @@ export const usePostStore = defineStore('post', {
     async fetchPosts(cid: string) {
       const result = await axios.get(`/columns/${cid}/posts`)
       this.posts.push(...result.data.list)
+    },
+    async deletePost(cid: string) {
+      const result = await axios.delete(`/columns/${cid}/posts`)
+      this.posts = this.posts.filter((post) => post._id === result.data._id)
     }
   }
 })
